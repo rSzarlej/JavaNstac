@@ -12,6 +12,8 @@ public class GrzybMainWindow {
 
 	private JFrame frame;
 	private JTextField nameField;
+	
+	private GrzybManager gMng;
 
 	/**
 	 * Launch the application.
@@ -34,12 +36,14 @@ public class GrzybMainWindow {
 	 */
 	public GrzybMainWindow() {
 		initialize();
+		
+		gMng = new GrzybManager();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() {		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1031, 821);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
