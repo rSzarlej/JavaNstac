@@ -1,5 +1,5 @@
 
-public class GrzybTrujacy {
+public class GrzybTrujacy implements Grzyb {
 	public void setName(String name) {this.name = name;};
 	public void setGenus(String name){this.genus = name;};
 	public void setCommonnames(String names){this.commonnames = names;};
@@ -11,7 +11,7 @@ public class GrzybTrujacy {
 	public String getCommonnames() {return commonnames;};
 	public String getPicture() {return linkToPicture;};
 	public String getAdditionalInfo() {return info;};
-	public String getToxic() {return "Trujacy";};
+	public String getToxic() {return "Truj¹cy";};
 	
 	String name, genus, commonnames, linkToPicture, info;
 }
