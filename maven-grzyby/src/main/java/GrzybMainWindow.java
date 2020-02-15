@@ -54,7 +54,7 @@ public class GrzybMainWindow {
 		helloBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String imie = nameField.getText();
-				String wiadomosc = "Hello " + imie;
+				String wiadomosc = "Hello " + imie + " po zmianie";
 				msgLabel.setText(wiadomosc);
 				
 			}
