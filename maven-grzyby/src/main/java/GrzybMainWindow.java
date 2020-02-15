@@ -32,9 +32,10 @@ public class GrzybMainWindow {
 	private JTextField nameField;
 	private JTextField genusField;
 	private JTextField namesField;
-	private JTextPane infoField;
 	private JLabel typeField;
 	private JPanel panel;
+	private JLabel infoLabel;
+	private JTextPane infoFIeld;
 	
 	private enum WW{
 		WW_Prev,
@@ -65,6 +66,9 @@ public class GrzybMainWindow {
 		initialize();
 		
 		gMng = new GrzybManager();
+		
+		GrzybInitBase tmp = new GrzybInitBase(gMng);
+		tmp.initBase();
 	}
 
 	private void updateDialog(WW whichWay) {
@@ -82,13 +86,14 @@ public class GrzybMainWindow {
 			nameField.setText("brak");
 			genusField.setText("brak");
 			namesField.setText("brak");
-			infoField.setText("brak");
+			infoFIeld.setText("brak");
 			typeField.setText("brak");
 			
+			infoLabel.setText("Dodatkowe info:");
+			
 			Image image = null;
-		    URL url = null;
 		    try {
-		        url = new URL("https://i.imgur.com/Hpzm6CX.png");
+		    	URL url = GrzybMainWindow.class.getResource("no_image.jpg");
 		        image = ImageIO.read(url);
 		    } catch (MalformedURLException ex) {
 		        System.out.println("Malformed URL");
@@ -103,7 +108,7 @@ public class GrzybMainWindow {
 			nameField.setText(tmp.getName());
 			genusField.setText(tmp.getGenus());
 			namesField.setText(tmp.getCommonnames());
-			infoField.setText(tmp.getAdditionalInfo());
+			infoFIeld.setText(tmp.getAdditionalInfo());
 			typeField.setText(tmp.getToxic());	
 			
 			
@@ -117,6 +122,7 @@ public class GrzybMainWindow {
 		        image = ImageIO.read(url);
 		    } catch (MalformedURLException ex) {
 		        System.out.println("Malformed URL");
+		        error = true;
 		    } catch (IOException iox) {
 		        System.out.println("Can not load file");
 		        error = true;
@@ -125,7 +131,7 @@ public class GrzybMainWindow {
 		    if(error)
 		    {
 		    	 try {
-				        url = new URL("https://i.imgur.com/Hpzm6CX.png");
+		    		 	url = GrzybMainWindow.class.getResource("no_image.jpg"); 
 				        image = ImageIO.read(url);
 				    } catch (MalformedURLException ex) {
 				        System.out.println("Malformed URL");
@@ -137,7 +143,16 @@ public class GrzybMainWindow {
 		    
 		    JLabel labelTmp = new JLabel(new ImageIcon(image));
 		    panel.add(labelTmp, BorderLayout.CENTER);
+		    
+		    if(tmp.getToxic() == "Jadalny")
+		    	infoLabel.setText("Przepis na danie:");
+		    else if(tmp.getToxic() == "Niejadalny")
+		    	infoLabel.setText("Jak rozpoznaæ:");
+		    else 
+		    	infoLabel.setText("Objawy zatrucia:");
 		}
+		
+		
 		
 	}
 	
@@ -165,9 +180,9 @@ public class GrzybMainWindow {
 		lblPopularneNazwy.setBounds(500, 210, 500, 30);
 		frmKatalogGrzybw.getContentPane().add(lblPopularneNazwy);
 		
-		JLabel lblDodatkoweInfo = new JLabel("Dodatkowe info:");
-		lblDodatkoweInfo.setBounds(500, 290, 500, 30);
-		frmKatalogGrzybw.getContentPane().add(lblDodatkoweInfo);
+		infoLabel = new JLabel("Dodatkowe info:");
+		infoLabel.setBounds(500, 290, 500, 30);
+		frmKatalogGrzybw.getContentPane().add(infoLabel);
 		
 		nameField = new JTextField();
 		nameField.setEditable(false);
@@ -261,9 +276,8 @@ public class GrzybMainWindow {
 		btnUsu.setBounds(183, 525, 89, 23);
 		frmKatalogGrzybw.getContentPane().add(btnUsu);
 		
-		infoField = new JTextPane();
-		infoField.setEditable(false);
-		infoField.setBounds(500, 330, 500, 150);
-		frmKatalogGrzybw.getContentPane().add(infoField);
+		infoFIeld = new JTextPane();
+		infoFIeld.setBounds(500, 330, 500, 150);
+		frmKatalogGrzybw.getContentPane().add(infoFIeld);
 	}
 }

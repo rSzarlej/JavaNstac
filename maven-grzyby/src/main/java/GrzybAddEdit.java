@@ -224,7 +224,7 @@ public class GrzybAddEdit extends JDialog {
 			
 			nameField.setText(currentGrzyb.getName());
 			rodzinaField.setText(currentGrzyb.getGenus());
-			namesField.setText(currentGrzyb.getAdditionalInfo());
+			namesField.setText(currentGrzyb.getCommonnames());
 			infoField.setText(currentGrzyb.getAdditionalInfo());
 			imageField.setText(currentGrzyb.getPicture());
 			
