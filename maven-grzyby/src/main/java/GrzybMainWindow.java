@@ -7,13 +7,19 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
+import javax.swing.JPanel;
+import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class GrzybMainWindow {
 
-	private JFrame frame;
-	private JTextField nameField;
+	private JFrame frmKatalogGrzybw;
 	
 	private GrzybManager gMng;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -23,7 +29,7 @@ public class GrzybMainWindow {
 			public void run() {
 				try {
 					GrzybMainWindow window = new GrzybMainWindow();
-					window.frame.setVisible(true);
+					window.frmKatalogGrzybw.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,38 +50,82 @@ public class GrzybMainWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {		
-		frame = new JFrame();
-		frame.setBounds(100, 100, 1031, 821);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmKatalogGrzybw = new JFrame();
+		frmKatalogGrzybw.setResizable(false);
+		frmKatalogGrzybw.setTitle("Katalog grzyb\u00F3w");
+		frmKatalogGrzybw.setBounds(100, 100, 1020, 600);
+		frmKatalogGrzybw.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmKatalogGrzybw.getContentPane().setLayout(null);
 		
-		final JLabel msgLabel = new JLabel("");
-		msgLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		msgLabel.setBounds(289, 187, 464, 62);
-		frame.getContentPane().add(msgLabel);
+		JLabel lblNewLabel = new JLabel("Nazwa:");
+		lblNewLabel.setBounds(500, 30, 500, 30);
+		frmKatalogGrzybw.getContentPane().add(lblNewLabel);
 		
-		JButton helloBtn = new JButton("Click me");
-		helloBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String imie = nameField.getText();
-				String wiadomosc = "Hello " + imie + " po zmianie";
-				msgLabel.setText(wiadomosc);
-				
-			}
-		});
-		helloBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		helloBtn.setBounds(331, 441, 341, 92);
-		frame.getContentPane().add(helloBtn);
+		JLabel lblRodzina = new JLabel("Rodzina:");
+		lblRodzina.setBounds(500, 120, 500, 30);
+		frmKatalogGrzybw.getContentPane().add(lblRodzina);
 		
-		JLabel lblNewLabel = new JLabel("Podaj imie:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel.setBounds(289, 283, 464, 47);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel lblPopularneNazwy = new JLabel("Popularne nazwy:");
+		lblPopularneNazwy.setBounds(500, 210, 500, 30);
+		frmKatalogGrzybw.getContentPane().add(lblPopularneNazwy);
 		
-		nameField = new JTextField();
-		nameField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		nameField.setBounds(289, 341, 464, 47);
-		frame.getContentPane().add(nameField);
-		nameField.setColumns(10);
+		JLabel lblDodatkoweInfo = new JLabel("Dodatkowe info:");
+		lblDodatkoweInfo.setBounds(500, 290, 500, 30);
+		frmKatalogGrzybw.getContentPane().add(lblDodatkoweInfo);
+		
+		textField = new JTextField();
+		textField.setEditable(false);
+		textField.setBounds(500, 70, 500, 30);
+		frmKatalogGrzybw.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setEditable(false);
+		textField_1.setColumns(10);
+		textField_1.setBounds(500, 160, 500, 30);
+		frmKatalogGrzybw.getContentPane().add(textField_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setEditable(false);
+		textField_2.setColumns(10);
+		textField_2.setBounds(500, 240, 500, 30);
+		frmKatalogGrzybw.getContentPane().add(textField_2);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setBounds(500, 330, 500, 150);
+		frmKatalogGrzybw.getContentPane().add(textArea);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(20, 30, 450, 392);
+		frmKatalogGrzybw.getContentPane().add(panel);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setForeground(Color.RED);
+		lblNewLabel_1.setBackground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1.setBounds(20, 443, 450, 37);
+		frmKatalogGrzybw.getContentPane().add(lblNewLabel_1);
+		
+		JButton btnNewButton = new JButton("Nast\u0119pny");
+		btnNewButton.setBounds(766, 525, 140, 23);
+		frmKatalogGrzybw.getContentPane().add(btnNewButton);
+		
+		JButton btnPoprzedni = new JButton("Poprzedni");
+		btnPoprzedni.setBounds(616, 525, 140, 23);
+		frmKatalogGrzybw.getContentPane().add(btnPoprzedni);
+		
+		JButton btnEdytuj = new JButton("Edytuj");
+		btnEdytuj.setBounds(282, 525, 89, 23);
+		frmKatalogGrzybw.getContentPane().add(btnEdytuj);
+		
+		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.setBounds(84, 525, 89, 23);
+		frmKatalogGrzybw.getContentPane().add(btnDodaj);
+		
+		JButton btnUsu = new JButton("Usu\u0144");
+		btnUsu.setBounds(183, 525, 89, 23);
+		frmKatalogGrzybw.getContentPane().add(btnUsu);
 	}
 }
