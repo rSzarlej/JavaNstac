@@ -1,16 +1,25 @@
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
@@ -25,6 +34,7 @@ public class GrzybMainWindow {
 	private JTextField namesField;
 	private JTextPane infoField;
 	private JLabel typeField;
+	private JPanel panel;
 	
 	private enum WW{
 		WW_Prev,
@@ -74,13 +84,59 @@ public class GrzybMainWindow {
 			namesField.setText("brak");
 			infoField.setText("brak");
 			typeField.setText("brak");
+			
+			Image image = null;
+		    URL url = null;
+		    try {
+		        url = new URL("https://i.imgur.com/Hpzm6CX.png");
+		        image = ImageIO.read(url);
+		    } catch (MalformedURLException ex) {
+		        System.out.println("Malformed URL");
+		    } catch (IOException iox) {
+		        System.out.println("Can not load file");
+		    }
+		    JLabel labelTmp = new JLabel(new ImageIcon(image));
+		    panel.add(labelTmp, BorderLayout.CENTER);
+		    
 		}else
 		{
 			nameField.setText(tmp.getName());
 			genusField.setText(tmp.getGenus());
 			namesField.setText(tmp.getCommonnames());
 			infoField.setText(tmp.getAdditionalInfo());
-			typeField.setText(tmp.getToxic());		
+			typeField.setText(tmp.getToxic());	
+			
+			
+			panel.removeAll();
+			Image image = null;
+		    URL url = null;
+		    
+		    boolean error = false;
+		    try {
+		        url = new URL(tmp.getPicture());
+		        image = ImageIO.read(url);
+		    } catch (MalformedURLException ex) {
+		        System.out.println("Malformed URL");
+		    } catch (IOException iox) {
+		        System.out.println("Can not load file");
+		        error = true;
+		    }
+		    
+		    if(error)
+		    {
+		    	 try {
+				        url = new URL("https://i.imgur.com/Hpzm6CX.png");
+				        image = ImageIO.read(url);
+				    } catch (MalformedURLException ex) {
+				        System.out.println("Malformed URL");
+				    } catch (IOException iox) {
+				        System.out.println("Can not load file");
+				        error = true;
+				    }    	
+		    }
+		    
+		    JLabel labelTmp = new JLabel(new ImageIcon(image));
+		    panel.add(labelTmp, BorderLayout.CENTER);
 		}
 		
 	}
@@ -131,11 +187,13 @@ public class GrzybMainWindow {
 		namesField.setBounds(500, 240, 500, 30);
 		frmKatalogGrzybw.getContentPane().add(namesField);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBounds(20, 30, 450, 392);
 		frmKatalogGrzybw.getContentPane().add(panel);
+		panel.setLayout(new BorderLayout());
 		
-		typeField = new JLabel("New label");
+		
+		typeField = new JLabel("Brak");
 		typeField.setHorizontalAlignment(SwingConstants.CENTER);
 		typeField.setForeground(Color.RED);
 		typeField.setBackground(Color.WHITE);
@@ -162,6 +220,18 @@ public class GrzybMainWindow {
 		frmKatalogGrzybw.getContentPane().add(btnPoprzedni);
 		
 		JButton btnEdytuj = new JButton("Edytuj");
+		btnEdytuj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					GrzybAddEdit dialog = new GrzybAddEdit(gMng, true);
+					dialog.setTitle("Edytuj grzyba");
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				} catch (Exception eee) {
+					eee.printStackTrace();
+				}
+			}
+		});
 		btnEdytuj.setBounds(282, 525, 89, 23);
 		frmKatalogGrzybw.getContentPane().add(btnEdytuj);
 		
@@ -169,7 +239,7 @@ public class GrzybMainWindow {
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					GrzybAddEdit dialog = new GrzybAddEdit(gMng);
+					GrzybAddEdit dialog = new GrzybAddEdit(gMng, false);
 					dialog.setTitle("Dodaj grzyba");
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);

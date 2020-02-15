@@ -1,12 +1,28 @@
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 public class GrzybManager {
 	public GrzybManager() {
 		grzyby = new Vector<Grzyb>();
 		currentIndex = -1;
 	}
 	
+	private boolean exists(String name) {
+		for(int i=0; i<grzyby.size(); i++)
+			if(grzyby.get(i).getName() == name)
+				return true;
+		
+		return false;
+	}
+	
 	public void add(String name, String genus, String names, String addInfo, String link, int type) {
+		
+		if(exists(name))
+		{
+			JOptionPane.showMessageDialog(null, "Podany grzyb ju¿ istnieje!", "Info", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
 		
 		Grzyb nowy;
 		
@@ -22,6 +38,7 @@ public class GrzybManager {
 		nowy.setGenus(genus);
 		nowy.setName(name);
 		nowy.setPicture(link);
+		
 		
 		grzyby.add(nowy);
 		
@@ -46,6 +63,15 @@ public class GrzybManager {
 	}
 	
 	public void edit(String name, String genus, String names, String addInfo, String link, int type) {
+		if(currentIndex == -1)
+			return;
+		
+		if(exists(name))
+		{
+			JOptionPane.showMessageDialog(null, "Podany grzyb ju¿ istnieje!", "Info", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		
 		grzyby.remove(currentIndex);
 		
 		Grzyb nowy;

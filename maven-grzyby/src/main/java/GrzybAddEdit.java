@@ -23,10 +23,14 @@ public class GrzybAddEdit extends JDialog {
 
 	
 	private GrzybManager mngTmp;
+	private boolean edit;
 	private JTextField nameField;
 	private JTextField rodzinaField;
 	private JTextField namesField;
 	private JTextField imageField;
+	private JLabel labelInfo;
+	private JComboBox comboBox;
+	private JTextPane infoField;
 	/**
 	 * Launch the application.
 	 */
@@ -34,8 +38,11 @@ public class GrzybAddEdit extends JDialog {
 		initDialog();
 	}
 	
-	public GrzybAddEdit(GrzybManager mng) {//obiekty przesylane przez referencje
+	public GrzybAddEdit(GrzybManager mng, boolean edit) {//obiekty przesylane przez referencje
 		mngTmp = mng;
+		
+		this.edit = edit;
+		
 		initDialog();	
 	}
 	
@@ -43,9 +50,9 @@ public class GrzybAddEdit extends JDialog {
 	 * Create the dialog.
 	 */
 	private void initDialog() {
-		final JLabel labelInfo = new JLabel("Przepis na danie:");
-		final JComboBox comboBox = new JComboBox();
-		final JTextPane infoField = new JTextPane();
+		labelInfo = new JLabel("Przepis na danie:");
+		comboBox = new JComboBox();
+		infoField = new JTextPane();
 		
 		setBounds(100, 100, 450, 768);
 		getContentPane().setLayout(new BorderLayout());
@@ -170,23 +177,12 @@ public class GrzybAddEdit extends JDialog {
 							JOptionPane.showMessageDialog(null, "Brak zdjêcia!", "Info", JOptionPane.INFORMATION_MESSAGE);
 							return;
 						}
+									
 						
-//						Grzyb nowy;
-//						
-//						if(type == 0)
-//							nowy = new GrzybJadalny();
-//						else if(type == 1)
-//							nowy = new GrzybNiejadalny();
-//						else
-//							nowy = new GrzybTrujacy();
-//						
-//						nowy.setAdditionalInfo(info);
-//						nowy.setCommonnames(names);
-//						nowy.setGenus(rodzina);
-//						nowy.setName(name);
-//						nowy.setPicture(link);
-						
-						mngTmp.add(name, rodzina, names, info, link, type);
+						if(edit)
+							mngTmp.edit(name, rodzina, names, info, link, type);
+						else
+							mngTmp.add(name, rodzina, names, info, link, type);
 						
 						dispose();
 					}
@@ -205,6 +201,33 @@ public class GrzybAddEdit extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
+		}
+		
+		
+		if(edit)
+		{
+			Grzyb currentGrzyb = mngTmp.getCurrent();
+			
+			if(currentGrzyb == null)
+				return;
+			
+			int type = 0;
+			
+			if(currentGrzyb.getToxic() == "Jadalny")
+				type = 0;
+			else if(currentGrzyb.getToxic() == "Niejadalny")
+				type = 1;
+			else
+				type = 2;
+			
+			comboBox.setSelectedIndex(type);
+			
+			nameField.setText(currentGrzyb.getName());
+			rodzinaField.setText(currentGrzyb.getGenus());
+			namesField.setText(currentGrzyb.getAdditionalInfo());
+			infoField.setText(currentGrzyb.getAdditionalInfo());
+			imageField.setText(currentGrzyb.getPicture());
+			
 		}
 	}
 }
