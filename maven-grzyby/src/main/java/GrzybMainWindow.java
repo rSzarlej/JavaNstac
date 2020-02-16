@@ -69,6 +69,8 @@ public class GrzybMainWindow {
 		
 		GrzybInitBase tmp = new GrzybInitBase(gMng);
 		tmp.initBase();
+		
+		updateDialog(WW.WW_Curr);
 	}
 
 	private void updateDialog(WW whichWay) {
